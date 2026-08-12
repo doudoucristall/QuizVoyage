@@ -1,0 +1,32 @@
+{
+  "quiz": {
+    "title": "Quizz Voyage Malte - Exemple",
+    "description": "Exemple de questions auto‑générées",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "mcq",
+        "question": "Quelle est la capitale de Malte ?",
+        "options": ["Gozo","Valletta","Mdina","Sliema"],
+        "correct": 1,
+        "difficulty": "facile",
+        "base_points": 100,
+        "time_weight": 0.3,
+        "image_filenames": ["valletta.jpg"],
+        "explanation": "Valletta est la capitale officielle."
+      },
+      {
+        "id": "q2",
+        "type": "map",
+        "question": "Placez sur la carte La Valette (valeur lat/lng attendue).",
+        "correct": { "lat": 35.8978, "lng": 14.5146 },
+        "difficulty": "moyen",
+        "base_points": 200,
+        "time_weight": 0.5,
+        "image_filenames": [],
+        "explanation": "La Valette est le port principal."
+      }
+    ],
+    "images_needed": ["valletta.jpg"]
+  }
+}

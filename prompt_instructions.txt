@@ -1,0 +1,22 @@
+Copiez exactement la consigne suivante en tête du texte de description du voyage que vous collerez ensuite.
+
+Génère une liste de questions de quiz en FRANÇAIS basées sur le descriptif du voyage qui suit. Retourne uniquement un objet JSON valide avec une clé "quiz" contenant:
+- "title": titre du quiz (string)
+- "description": résumé court (string)
+- "questions": tableau d'objets question.
+
+Chaque question doit contenir ces champs:
+- "id": identifiant unique (string)
+- "type": un des ["mcq","tf","order","map","match","open"]
+- "question": texte de la question (string)
+- "options": tableau de propositions (strings) — requis pour "mcq" et "match", optionnel sinon
+- "correct": pour "mcq" l'index (int) de la bonne option; pour "tf" true/false; pour "order" tableau d'indices représentant l'ordre correct; pour "map" un objet { "lat": nombre, "lng": nombre } ou une chaîne de ville; pour "open" une courte réponse modèle (string)
+- "difficulty": un de ["facile","moyen","difficile"]
+- "base_points": points de base si bonne réponse (int)
+- "time_weight": importance pour le chrono (0-1 float)
+- "image_filenames": tableau de noms de fichiers image à associer (strings)
+- "explanation": courte explication ou anecdote (string)
+
+Ajoute aussi un tableau "images_needed" listant les noms de fichiers image que l'admin devra uploader (ex: ["cathedrale_malta.jpg"]) et, si applicable, pour chaque image une courte note d'usage.
+
+Ne fournis aucun texte en dehors du JSON. Ensuite colle le descriptif du voyage ci-dessous.
