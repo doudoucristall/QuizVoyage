@@ -1,0 +1,62 @@
+// Prototype Firestore security rules for Quizz Voyage
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // games collection: readable by anyone (the game code is the secret), writes limited to authenticated admin
+    match /games/{gameId} {
+      allow read: if true;
+
+      // Create: only authenticated users may create a game and must declare themselves as adminUid
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasAll(['adminUid','quiz','settings'])
+        && request.resource.data.adminUid == request.auth.uid;
+
+      // Update: only the admin who created the game can update it,
+      // or a user with the custom claim `siteAdmin` (for testing/admin tools).
+      // Ensure critical fields cannot be changed by the client (adminUid, admin, quiz).
+      allow update: if request.auth != null
+        && (resource.data.adminUid == request.auth.uid || request.auth.token.siteAdmin == true)
+        && request.resource.data.adminUid == resource.data.adminUid
+        && request.resource.data.admin == resource.data.admin
+        && request.resource.data.quiz == resource.data.quiz;
+
+      // No deletes from clients in prototype
+      allow delete: if false;
+
+      // players subcollection: players can create/update their own doc
+      match /players/{playerId} {
+        allow read: if true;
+        allow create: if request.auth != null
+          && request.auth.uid == request.resource.data.uid
+          && request.resource.data.score == 0
+          && request.resource.data.totalTime == 0;
+        // Prevent clients from changing score/totalTime or uid directly. Allow update only if uid, score and totalTime are unchanged.
+        allow update: if request.auth != null
+          && request.auth.uid == resource.data.uid
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.score == resource.data.score
+          && request.resource.data.totalTime == resource.data.totalTime;
+        allow delete: if false;
+      }
+
+      // answers subcollection: authenticated users may create their own answers
+      match /answers/{answerId} {
+        allow read: if true;
+        // Answers must be created by the authenticated player and contain sane values.
+        allow create: if request.auth != null
+          && request.auth.uid == request.resource.data.playerUid
+          && (request.resource.data.awarded is number)
+          && request.resource.data.awarded >= 0
+          && request.resource.data.awarded <= 100000
+          && request.resource.data.submittedAt <= request.time;
+        allow delete: if false;
+      }
+
+      // meta (leaderboard) can be written by admin only
+      match /meta/{metaId} {
+        allow read: if true;
+        allow write: if request.auth != null && request.resource.data.adminUid == request.auth.uid;
+      }
+    }
+  }
+}

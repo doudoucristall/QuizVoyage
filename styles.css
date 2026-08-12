@@ -1,0 +1,27 @@
+:root{ --accent:#2b7a78; --bg:#f7f7f8; --card:#fff }
+body{ font-family:system-ui,Segoe UI,Roboto,Arial; margin:0; background:var(--bg); color:#222 }
+header{ background:var(--accent); color:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center }
+header h1{ margin:0; font-size:18px }
+nav button{ margin-left:8px }
+main{ padding:16px }
+.view{ background:var(--card); padding:12px; border-radius:8px; max-width:900px }
+.hidden{ display:none }
+textarea{ width:100%; min-height:160px }
+.row{ display:flex; gap:8px; margin-top:8px }
+.info{ margin-top:8px; font-weight:bold }
+button{ background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer }
+@media (max-width:600px){ header h1{ font-size:16px } }
+
+/* overlay choice */
+.overlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.4) }
+.overlay{ z-index: 9999 }
+.overlay-card{ background:var(--card); padding:18px; border-radius:10px; max-width:520px; width:90% }
+.overlay .row{ justify-content:flex-end }
+.overlay .row button{ margin-left:8px }
+
+/* share block */
+#shareBlock { margin-top:8px }
+.qr-wrap{ margin-top:10px; display:flex; gap:12px; align-items:center }
+.qr-wrap img{ width:140px; height:140px; border:1px solid #ddd; border-radius:8px }
+.qr-wrap.hidden{ display:none }
+

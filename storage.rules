@@ -1,0 +1,12 @@
+// Prototype Firebase Storage rules for Quizz Voyage
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow read access to game media for everyone (they have the game code)
+    match /games/{gameId}/media/{fileName} {
+      allow read: if true;
+      // Allow write only for authenticated users (prototype). For stricter control, include metadata.adminUid checks.
+      allow write: if request.auth != null;
+    }
+  }
+}

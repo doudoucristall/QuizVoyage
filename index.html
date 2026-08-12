@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quizz Voyage - Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Quizz Voyage — Prototype</h1>
+    <nav>
+      <button id="btnAdmin">Administration</button>
+      <button id="btnPlayer">Jouer</button>
+    </nav>
+  </header>
+
+  <div id="entryChoice" class="overlay">
+    <div class="overlay-card">
+      <h2>Bienvenue</h2>
+      <p>Souhaitez‑vous créer une partie (vous serez admin) ou participer à une partie ?</p>
+      <div class="row">
+        <button id="chooseCreate" type="button">Créer une partie</button>
+        <button id="chooseJoin" type="button">Participer</button>
+      </div>
+      <p id="authStatus">Connexion en cours...</p>
+      <div style="margin-top:8px">
+        <button id="btnAnonSignIn" type="button">Forcer la connexion anonyme</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section id="adminView" class="view">
+      <h2>Administration</h2>
+      <label>Coller le JSON du quiz (ou importer `sample_quiz.json`):</label>
+      <textarea id="quizJson" placeholder='Collez ici le JSON généré par l\'IA'></textarea>
+      <label>Uploader images (optionnel)</label>
+      <input id="imageFiles" type="file" multiple accept="image/*">
+      <div class="row">
+        <input id="adminPseudo" placeholder="Pseudo admin" />
+        <button id="createGame" type="button">Créer la partie</button>
+      </div>
+      <p id="adminAuthInfo" class="info">UID: —</p>
+      <p id="gameCodeArea" class="info"></p>
+      <div id="shareBlock" class="hidden">
+        <label>Lien de partage :</label>
+        <div class="row">
+          <input id="shareLink" readonly style="flex:1" />
+          <button id="copyLink" type="button">Copier le lien</button>
+          <button id="shareButton" type="button">Partager</button>
+        </div>
+        <div id="qrWrap" class="qr-wrap hidden">
+          <label>QR code :</label>
+          <div><img id="qrImg" alt="QR code de partage" /></div>
+        </div>
+      </div>
+      <button id="startGame" type="button" disabled>Start Game</button>
+      <div class="row" style="margin-top:10px">
+        <button id="computeLeaderboard" type="button">Calculer classement</button>
+      </div>
+      <div id="leaderboard" class="hidden">
+        <h3>Classement</h3>
+        <ol id="leaderboardList"></ol>
+      </div>
+    </section>
+
+    <section id="playerView" class="view hidden">
+      <h2>Rejoindre une partie</h2>
+      <input id="joinCode" placeholder="Code de la partie (ex: 834521)" />
+      <input id="playerPseudo" placeholder="Votre pseudo" />
+      <button id="joinGame" type="button">Rejoindre</button>
+      <div id="playerArea" class="hidden">
+        <h3 id="questionText"></h3>
+        <div id="options"></div>
+        <div id="timer"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Quizz Voyage — prototype déployé (testez la partie à l'URL publique).
+  </footer>
+
+  <!-- Firebase SDKs (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "quizz-voyage",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "firebase deploy --only firestore:rules,storage,hosting,functions",
+    "emulate": "firebase emulators:start --only firestore,auth,functions,storage,hosting",
+    "test:rules": "npx firebase emulators:exec \"node test/firestore-rules-test.js\" --only firestore",
+    "test:flow": "npx firebase emulators:exec \"node test/flow-simulation-test.js\" --only firestore",
+    "test": "npm run test:rules && npm run test:flow"
+  },
+  "dependencies": {
+    "@firebase/rules-unit-testing": "^5.0.1",
+    "firebase": "^12.17.1"
+  }
+}
